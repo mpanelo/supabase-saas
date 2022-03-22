@@ -6,20 +6,16 @@ import {
   useContext,
 } from 'react'
 import { supabase } from '../utils/supabase'
-import { User as SupabaseAuthUser } from '@supabase/gotrue-js/src/lib/types'
+import { definitions } from '../types/supabase'
 import { useRouter } from 'next/router'
+import { AuthUser, User } from '@supabase/supabase-js'
+
+type UserProfile = AuthUser & definitions['profile']
 
 export interface ContextProps {
-  user: User | null
+  user: UserProfile | null
   login: () => Promise<void>
   logout: () => Promise<void>
-}
-
-export interface User extends SupabaseAuthUser {
-  is_subscribed: boolean
-  interval: string
-  stripe_customer: string
-  email: string
 }
 
 interface ProviderProps {
@@ -31,7 +27,7 @@ const Context = createContext<ContextProps | null>(null)
 const Provider = ({ children }: ProviderProps) => {
   const router = useRouter()
 
-  const [user, setUser] = useState<User>(supabase.auth.user())
+  const [user, setUser] = useState<UserProfile | null>(supabase.auth.user())
 
   useEffect(() => {
     const getUserProfile = async () => {
