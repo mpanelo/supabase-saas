@@ -1,15 +1,9 @@
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { supabase } from '../utils/supabase'
+import { ContextProps, useUser } from '../context/user'
 
 const Logout = () => {
-  const router = useRouter()
-
+  const { logout } = useUser() as ContextProps
   useEffect(() => {
-    const logout = async () => {
-      await supabase.auth.signOut()
-      router.push('/')
-    }
     logout()
   }, [])
   return <p>Logging Out</p>

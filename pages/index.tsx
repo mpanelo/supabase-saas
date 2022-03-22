@@ -2,9 +2,11 @@ import { supabase } from '../utils/supabase'
 import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 import { HomeProps, Lesson } from '../utils/types'
+import { ContextProps, useUser } from '../context/user'
 
 const Home: NextPage<HomeProps> = ({ lessons }) => {
-  console.log(supabase.auth.user())
+  const { user } = useUser() as ContextProps
+  console.log({ user })
   return (
     <div className="mx-auto my-16 w-full max-w-3xl px-2">
       {lessons?.map((lesson) => (
