@@ -3,7 +3,6 @@ import { supabase } from '../utils/supabase'
 import { Lesson, LessonDetailsProps, Params } from '../utils/types'
 
 const LessonDetails: NextPage<LessonDetailsProps> = ({ lesson }) => {
-  console.log(lesson)
   return (
     <div className="mx-auto w-full max-w-3xl py-16 px-8">
       <h1 className="mb-6 text-3xl">{lesson.title}</h1>
