@@ -55,7 +55,8 @@ const Provider = ({ children }: ProviderProps) => {
   }, [])
 
   const login = async () => {
-    supabase.auth.signIn({
+    console.log('hi')
+    await supabase.auth.signIn({
       provider: 'github',
     })
   }

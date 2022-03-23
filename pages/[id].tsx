@@ -1,12 +1,29 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { useEffect, useState } from 'react'
 import { supabase } from '../utils/supabase'
 import { Lesson, LessonDetailsProps, Params } from '../utils/types'
+import Video from 'react-player'
 
 const LessonDetails: NextPage<LessonDetailsProps> = ({ lesson }) => {
+  const [videoUrl, setVideoUrl] = useState()
+  const getPremiumContent = async () => {
+    const { data } = await supabase
+      .from('premium_content')
+      .select('video_url')
+      .eq('id', lesson.id)
+      .single()
+
+    setVideoUrl(data?.video_url)
+  }
+
+  useEffect(() => {
+    getPremiumContent()
+  })
   return (
     <div className="mx-auto w-full max-w-3xl py-16 px-8">
       <h1 className="mb-6 text-3xl">{lesson.title}</h1>
       <p>{lesson.description}</p>
+      {!!videoUrl && <Video url={videoUrl} width="100%" />}
     </div>
   )
 }

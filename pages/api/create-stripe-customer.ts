@@ -17,6 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const customer = await stripe.customers.create({
     email: req.body.record.email,
   })
+  console.log({ ...req.body })
 
   await supabase
     .from('profile')
